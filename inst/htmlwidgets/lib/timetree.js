@@ -148,7 +148,7 @@ TimeTree.prototype.loadJSON = function(data) {
   
   //console.log(data);
   
-  if( parseInt(new Date(parseInt(data[0].time)).getFullYear()) <= 1990) {
+  if( parseInt(new Date(parseInt(data[0].time)).getFullYear()) <= 1971) {
     console.log("Julian Day time step On");
     _this.time_timestamp = false;
   }

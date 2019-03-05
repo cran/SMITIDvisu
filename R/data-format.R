@@ -34,8 +34,16 @@ createTimeGraph <- function(nodes,edges) {
     edges$time <- as.numeric(as.POSIXct(strptime(edges$time, format="%Y-%m-%dT%H:%M:%S")))*1000
   }
   else {
-    nodes$time <- as.numeric(nodes$time)
-    edges$time <- as.numeric(edges$time)
+      # is a timestamp
+      if( as.numeric(format(as.Date(as.POSIXct(as.numeric(nodes$time[which(!is.na(nodes$time))][1]), origin="1970-01-01", tz = "UTC")), format="%Y")) >= 1971 ) {
+          nodes$time <- as.numeric(nodes$time)*1000
+          edges$time <- as.numeric(edges$time)*1000 
+      }
+      # julian day
+      else {
+        nodes$time <- as.numeric(nodes$time)
+        edges$time <- as.numeric(edges$time)
+      }
   }
   
   # all times
@@ -79,8 +87,15 @@ createTimeLine <- function(items, title) {
   if( nrow(items) == 0 || is.null(items$level) || is.null(items$label) || is.null(items$timestart)) {return(list())}
   # converte Date ISO POSIX to timestamp
   if( any(is.na(as.numeric(items$timestart[which(!is.na(items$timestart))]))) ) {
-    items$timestart <- as.numeric(as.POSIXct(strptime(items$timestart, format="%Y-%m-%dT%H:%M:%S")))*1000
-    items$timeend <- as.numeric(as.POSIXct(strptime(items$timeend, format="%Y-%m-%dT%H:%M:%S")))*1000
+    items$timestart <- as.numeric(as.POSIXct(strptime(items$timestart, format="%Y-%m-%dT%H:%M:%S"), origin="1970-01-01", tz = "UTC"))*1000
+    items$timeend <- as.numeric(as.POSIXct(strptime(items$timeend, format="%Y-%m-%dT%H:%M:%S"), origin="1970-01-01", tz = "UTC"))*1000
+  }
+  else {
+      # is a timestamp
+      if( as.numeric(format(as.Date(as.POSIXct(as.numeric(items$timestart[which(!is.na(items$timestart))][1]), origin="1970-01-01", tz = "UTC")), format="%Y")) >= 1971 ) {
+          items$timestart <- as.numeric(items$timestart)*1000
+          items$timeend <- as.numeric(items$timeend)*1000 
+      }
   }
   
   mintime <- min(as.numeric(as.character(items$timestart)), na.rm = TRUE)
@@ -96,7 +111,11 @@ createTimeLine <- function(items, title) {
   bottom <- list()
   middle <- list()
   if(nrow(items[which(items$level == "top"),2:5]) > 0) top <- list("level"="-1", "label"="input", "timeline" = (items[which(items$level == "top"),2:5]))
-  if(nrow(items[which(items$level == "middle"),2:5]) > 0) middle <- list("level"="0", "label"=title, "timeline" = (items[which(items$level == "middle"),2:5]))
+  if(nrow(items[which(items$level == "middle"),2:5]) > 0) {
+    middle <- list("level"="0", "label"=title, "timeline" = (items[which(items$level == "middle"),2:5]))
+    middle <- rapply(middle,function(x) ifelse(x==Inf,maxtime,x), how = "replace")
+  }
+ 
   if(nrow(items[which(items$level == "bottom"),2:5]) > 0) bottom <- list("level"="1", "label"="output", "timeline" = (items[which(items$level == "bottom"),2:5]))
   
   hosttimeline <- list(list("type"="timeline", "mintime"=mintime, "maxtime"=maxtime, "nblevels"=nblevels), top, middle, bottom)

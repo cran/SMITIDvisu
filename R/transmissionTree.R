@@ -18,7 +18,7 @@
 
 #' transmissionTree
 #' @description Draw a transmission tree over the time.
-#' Time use timestamp or Date in ISO format.
+#' Time use timestamp or Date in ISO format ("%Y-%m-%dT%H:%M:%S").
 #' @param nodes a data.frame that reprensent hosts status in time with ID, status and time in columns
 #' @param edges a data.frame that reprensent tramsmission link between hosts (pathogens) with ID, source, target and time in columns
 #' @param nodes.color a list of color for nodes status "status"="color"

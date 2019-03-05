@@ -73,7 +73,7 @@ function TimeLine(el, options) {
   this.tooltip = null;
   
   // Day format
-  this.timeFormat = d3.timeFormat("%Y-%m-%d");
+  this.timeFormat = d3.utcFormat("%Y-%m-%dT%H:%M:%SZ");
   
   // is time timestamp
   this.time_timestamp = true;
@@ -123,7 +123,10 @@ TimeLine.prototype.loadJSON = function(data) {
   //console.log(data.length);
   if( data.length === 0 ){return(true);}
   
-  if( parseInt(new Date(parseInt(data[0].mintime)).getFullYear()) <= 1990) {
+  console.log(data);
+  
+  if( parseInt(new Date(parseInt(data[0].mintime)).getFullYear()) < 1971) {
+    
     console.log("Julian Day time step On");
     this.time_timestamp = false;
   }

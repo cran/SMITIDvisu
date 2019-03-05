@@ -22,7 +22,7 @@ transmissionTree(nodes, edges, nodes.color = list(default = "black"),
 }
 \description{
 Draw a transmission tree over the time.
-Time use timestamp or Date in ISO format.
+Time use timestamp or Date in ISO format ("%Y-%m-%dT%H:%M:%S").
 }
 \examples{
 library(SMITIDvisu)
