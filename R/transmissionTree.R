@@ -41,7 +41,7 @@
 #' @export
 transmissionTree <- function(nodes,
                              edges, 
-                             nodes.color = list("default"="black"),
+                             nodes.color = NULL,
                              width = NULL,
                              height = NULL,
                              elementId = NULL) {
@@ -49,6 +49,10 @@ transmissionTree <- function(nodes,
   
   
   graph.list = createTimeGraph(nodes,edges)
+  
+  if( is.null(nodes.color)) {
+    nodes.color = createRainbowColors(unique(nodes$status))
+  }
   
   # forward options using x
   x = list(

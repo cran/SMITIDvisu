@@ -4,8 +4,8 @@
 \alias{timeLine}
 \title{timeLine}
 \usage{
-timeLine(data, title, color = list(default = "black"), width = NULL,
-  height = NULL, elementId = NULL)
+timeLine(data, title, color = NULL, width = NULL, height = NULL,
+  elementId = NULL)
 }
 \arguments{
 \item{data}{a data.frame that reprensent hosts status in time with ID, status and time in columns}

@@ -45,7 +45,7 @@ HTMLWidgets.widget({
         if (HTMLWidgets.shinyMode) {
 
           mouseclick = function(d) {
-            console.log("click " + d);
+            //console.log("click " + d);
             Shiny.onInputChange(
                 "transmissionTree_node_click", d
                 //{id: d, nonce: Math.random()}
@@ -58,7 +58,8 @@ HTMLWidgets.widget({
           tt.loadJSON(x.data);
           tt.draw();
         }else{
-          tt.loadJSON(x.data);  
+          tt.loadJSON(x.data);
+          tt.loadOptions({nodes_color: tt_nodes_color, mouseclick: mouseclick});
           tt.redraw();
         }
         tt.show();
@@ -68,8 +69,38 @@ HTMLWidgets.widget({
 
         if(tt) { tt.redraw(width,height);  }
 
-      }
+      },
 
+      getTransmissionTree: function() {
+        return(tt);
+      }
     };
   }
 });
+
+/** getTransmissionTree
+* return object from id
+* @param id : widget name (output name in server)
+*/
+function getTransmissionTree(id){
+
+  var htmlWidgetsObj = HTMLWidgets.find("#" + id);
+  var tt = htmlWidgetsObj.getTransmissionTree();
+  return(tt);
+}
+
+/** updateTT
+ * add a custom message handler to update transmissionTree
+ * client side
+ */
+if(Shiny !== undefined) {
+  Shiny.addCustomMessageHandler("updateTT", function(message) {
+    var tt = getTransmissionTree(message.id);
+    tt.hide();
+    //console.log(HTMLWidgets.dataframeToD3(message.data));
+    tt.loadJSON(message.data);
+    tt.loadOptions(message.options);
+    tt.redraw();
+  });
+}
+

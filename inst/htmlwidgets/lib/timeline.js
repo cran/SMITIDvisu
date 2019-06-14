@@ -120,10 +120,9 @@ TimeLine.prototype.loadJSON = function(data) {
   _this = this;
   this.root = data;
   
-  //console.log(data.length);
   if( data.length === 0 ){return(true);}
   
-  console.log(data);
+  //console.log(data);
   
   if( parseInt(new Date(parseInt(data[0].mintime)).getFullYear()) < 1971) {
     

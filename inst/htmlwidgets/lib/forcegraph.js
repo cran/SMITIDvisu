@@ -426,7 +426,7 @@ ForceGraph.prototype.draw = function() {
 	          .innerRadius(0)
 	          .outerRadius(function(d,a){return Math.max(d.weight*250,5)+10}) //Math.max(_this.radius*d.weight,_this.minRadius)});
 	
-	  var colors_pie = d3.scaleOrdinal(d3.schemeCategory20)
+	  var colors_pie = d3.scaleOrdinal(d3.schemeCategory10)
 	                  .domain([_this.minTime, _this.maxTime]);
 	                  //d3.scaleLinear()
 	                  //.domain([_this.minTime, (_this.maxTime-_this.minTime)/2 , _this.maxTime])

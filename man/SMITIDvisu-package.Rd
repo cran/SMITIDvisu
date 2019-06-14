@@ -15,8 +15,8 @@ It mainly using D3JS, noUiSlider and FileSaver javascript libraries.
 \tabular{ll}{
          Package: \tab SMITIDvisu\cr
          Type: \tab Package\cr
-         Version: \tab 0.0.4\cr
-         Date: \tab 2019-03-05\cr
+         Version: \tab 0.0.6\cr
+         Date: \tab 2019-06-14\cr
          License: \tab GPL (>=3)\cr
          }
 }
@@ -28,4 +28,6 @@ It mainly using D3JS, noUiSlider and FileSaver javascript libraries.
 }
 \author{
 Jean-Francois Rey \email{jean-francois.rey@inra.fr}
+
+Julien Boge \email{julien.boge.u@gmail.com}
 }

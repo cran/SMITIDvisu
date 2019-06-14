@@ -62,6 +62,15 @@ function TimeTree(el,options) {
   if( options.mouseclick === null ) { this.mouseclick = null;}
   else { this.mouseclick = options.mouseclick;}
   
+  // offsprings colors
+  this.edges_colors_offsprings_hex = d3.quantize(d3.interpolateCool,22)
+  this.edges_colors_offsprings_hex.forEach( function(d,i,a){a[i]=d3.color(d).hex()})
+  this.edges_colors_offsprings =  d3.scaleQuantize([0,1], this.edges_colors_offsprings_hex);
+  // infected by colors
+  this.edges_colors_infectedby_hex =  d3.quantize(d3.interpolateRgb('orange','red'),22);
+  this.edges_colors_infectedby_hex.forEach(function(d,i,a){a[i]=d3.color(d).hex()})
+  this.edges_colors_infectedby =  d3.scaleQuantize([0,1], this.edges_colors_infectedby_hex);
+  
   // svg nodes group
   this.nodes_group = null;
   
@@ -80,6 +89,8 @@ function TimeTree(el,options) {
   this.time_timestamp = true;
   
   // svg width and height
+  this.default_width = options.width;
+  this.default_height = options.height;
   this.width = options.width;
   this.height = options.height;
   //console.log(options.width + " " + options.height)
@@ -110,7 +121,11 @@ var default_nodes_color = function(value) {
 
 // TimeTree loadOptions
 TimeTree.prototype.loadOptions = function(options) {
-  // do automatic scope between options and attributs
+  if( options.nodes_color === undefined) { this.nodes_color = default_nodes_color;}
+  else { this.nodes_color = options.nodes_color; }
+  
+  if( options.mouseclick === null ) { this.mouseclick = null;}
+  else { this.mouseclick = options.mouseclick;}
 }
 
 // TimeTree laod a json data object 
@@ -143,7 +158,12 @@ TimeTree.prototype.loadOptions = function(options) {
 //
 TimeTree.prototype.loadJSON = function(data) {
 
-  this.root = data;
+  if(data !== undefined){
+    delete this.root;
+    this.root = data;
+  }
+  else { console.log("TimeTree data empty"); return; }
+
   var _this = this;
   
   //console.log(data);
@@ -152,12 +172,17 @@ TimeTree.prototype.loadJSON = function(data) {
     console.log("Julian Day time step On");
     _this.time_timestamp = false;
   }
+  else {_this.time_timestamp = true;}
   
   // set begining and ending time in milliseconde (json graph Have to be sort by time)
   this.starttime = parseInt(data[0].time);
   this.endtime = parseInt(data[data.length - 1].time);
   
   // load times array and nodes array
+  delete _this.times;
+  delete _this.nodes;
+  _this.times = [];
+  _this.nodes = [];
   data.forEach( function(graph) {
     _this.times.push(parseInt(graph.time));
     graph.nodes.forEach( function(node){
@@ -329,6 +354,8 @@ TimeTree.prototype.mouseovernode = function(data) {
   
   var _this = this;
   
+  color_sources = d3.interpolateReds();
+  
   this.nodes_group.selectAll("text")
     .style("opacity",0.2)
     .attr("dx", function(d) { return (parseInt(d3.select(this).attr("dx")) <= 0) ? "-10px" : "10px"; })
@@ -346,8 +373,10 @@ TimeTree.prototype.mouseovernode = function(data) {
       graph.edges.forEach( function(edge){
         if( edge.source == data ) {
           _this.time_graphs.select("#edge-"+edge.ID)
-            .style("stroke","red")
-            .style("opacity",1);
+            .style("stroke", _this.edges_colors_offsprings(parseFloat(edge.weight)))
+            .attr("marker-end", function(d){ return("url(#arrow_" + _this.edges_colors_offsprings(parseFloat(edge.weight)).substring(1) + ")");})
+            .style("opacity",1)
+            .raise();
             
           _this.nodes_group.select("#node-"+edge.target)
             .style("opacity",1)
@@ -355,23 +384,37 @@ TimeTree.prototype.mouseovernode = function(data) {
             .duration(1000)
             .attr("dx", function(d) { return (parseInt(d3.select(this).attr("dx")) <= 0) ? "-15px" : "15px"; })
             .style("font-size",_this.nodes_fsize_hover);
+          
+          _this.time_graphs.selectAll("#tt-graph-"+ graph.time).raise();
         }
         if(edge.target == data) {
           _this.time_graphs.select("#edge-"+edge.ID)
-            .style("stroke","green")
-            .style("opacity",1);
+            .style("stroke", _this.edges_colors_infectedby(parseFloat(edge.weight)))
+            .attr("marker-end", function(d){ return("url(#arrow_" + _this.edges_colors_infectedby(parseFloat(edge.weight)).substring(1) + ")");})
+            .style("opacity",1)
+            .raise();
+            
           _this.nodes_group.select("#node-"+edge.source)
             .style("opacity",1)
             .transition()
             .duration(1000)
             .attr("dx", function(d) { return (parseInt(d3.select(this).attr("dx")) <= 0) ? "-15px" : "15px"; })
             .style("font-size",_this.nodes_fsize_hover);
+          
+          _this.time_graphs.selectAll("#tt-graph-"+ graph.time).raise();
         }
         if(edge.source != data && edge.target != data) {
           _this.time_graphs.select("#edge-"+edge.ID)
-            .style("opacity",0.2);
+            .attr("marker-end", function(d){ return("url(#arrow_4682b4)"); })
+            .style("stroke","steelblue")
+            .style("opacity",0.05);
+          _this.time_graphs.selectAll("#tt-graph-"+ graph.time).lower();
         }
       })
+    }
+    else {
+          _this.time_graphs.selectAll("#tt-graph-"+ graph.time).lower();
+
     }
   }) 
 };
@@ -389,6 +432,7 @@ TimeTree.prototype.mouseoutnode = function(data) {
     .style("font-size",_this.nodes_fsize+"px");
  
   _this.time_graphs.selectAll("path")
+    .attr('marker-end', function(d){ return('url(#arrow_4682b4)'); })
     .style("stroke","steelblue")
     .style("opacity",1);
 };
@@ -499,11 +543,14 @@ TimeTree.prototype.draw = function() {
     
     return path;
   }
-  
-  // add defs for arrows
-  _this.svg.append("defs")
+
+  // add defs and marker for arrows colors
+  defs = _this.svg.append("defs");
+    defs.selectAll("marker")
+    .data( ["#4682b4"].concat(_this.edges_colors_offsprings_hex, _this.edges_colors_infectedby_hex) )
+    .enter()
     .append("marker")
-		.attr("id","arrow")
+		.attr("id", function(d){ return("arrow_"+d.substring(1)) })
 		.attr("viewBox","0 0 10 10")
 		.attr("refX",0)
 		.attr("refY",5)
@@ -512,8 +559,9 @@ TimeTree.prototype.draw = function() {
 		.attr("markerHeight",4)
 		.attr("orient","auto")
 		.append("path")
-		.attr("d", "M 0 0 L 10 5 L 0 10 z");
-  
+		.attr("d", "M 0 0 L 10 5 L 0 10 z")
+		.attr("fill", function(d){ return(d); });
+
   // create a g for each time to display
   _this.time_graphs = _this.svg.selectAll("g")
           .enter()
@@ -531,7 +579,7 @@ TimeTree.prototype.draw = function() {
                 d3.select(this)
                 .attr("id",function(d){return "edge-" + d.ID;})
                 .attr("d", line(createPath(d)))
-                .attr("marker-end","url(#arrow)")
+                .attr("marker-end","url(#arrow_4682b4)")
                 .classed("timetree-edge",true)
               });
 
@@ -583,8 +631,19 @@ TimeTree.prototype.update = function() {
 TimeTree.prototype.redraw = function(width, height) {
   var _this = this;
   _this.hide();
-  if( width !== undefined ) _this.width = width;
-  if( height !== undefined ) _this.height = height;
+  
+  if( width !== undefined) _this.width = width;
+  else _this.width =  _this.default_width;
+  if( height !== undefined) _this.height = height;
+  else _this.height = _this.default_height;
+  
+  // set default size to the new size
+  _this.default_width = _this.width;
+  _this.default_height = _this.height;
+  
+
+  _this.el.style("width", _this.default_width+"px");
+  _this.el.style("height", _this.default_height+"px");
   
   delete this.slider_date;
   _this.slider_date = null;

@@ -28,11 +28,14 @@
 #' @export
 timeLine <- function(data,
                      title,
-                     color = list("default"="black"),
+                     color = NULL,
                      width = NULL,
                      height = NULL,
                      elementId = NULL) {
 
+  if( is.null(color)) {
+    color = createRainbowColors(unique(data$label))
+  }
   
   # forward options using x
   x = list(

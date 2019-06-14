@@ -4,8 +4,8 @@
 \alias{transmissionTree}
 \title{transmissionTree}
 \usage{
-transmissionTree(nodes, edges, nodes.color = list(default = "black"),
-  width = NULL, height = NULL, elementId = NULL)
+transmissionTree(nodes, edges, nodes.color = NULL, width = NULL,
+  height = NULL, elementId = NULL)
 }
 \arguments{
 \item{nodes}{a data.frame that reprensent hosts status in time with ID, status and time in columns}

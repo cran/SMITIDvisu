@@ -60,13 +60,13 @@ createTimeGraph <- function(nodes,edges) {
   
   
   # initial graph as list
-  graph.start <- list("nodes"=nodes.start,"edges"=edges[which(floor(edges$time) == min(timeline)), c("ID","source","target")],"time"=min(timeline))
+  graph.start <- list("nodes"=nodes.start,"edges"=edges[which(floor(edges$time) == min(timeline)), c("ID","source","target","weight")],"time"=min(timeline))
   graphs.list <- list(c(graphs.list, graph.start))
   
   # append next graph in time
   for( t in timeline[2:length(timeline)]) {
     nodes.next <- subset(nodes, floor(nodes$time) %in% t, select=c("ID","status"))
-    edges.next <- subset(edges, floor(edges$time) %in% t, select=c("ID","source","target"))
+    edges.next <- subset(edges, floor(edges$time) %in% t, select=c("ID","source","target","weight"))
     graph.next <- list("nodes"=nodes.next,"edges"=edges.next,"time"=t)
     graphs.list <- c(graphs.list,list(graph.next))
   }
@@ -107,16 +107,17 @@ createTimeLine <- function(items, title) {
   #                   list("level"="0", "label"=title, "timeline" = (items[which(items$level == "middle"),2:5])),
   #                   list("level"="1", "label"="output", "timeline" = (items[which(items$level == "bottom"),2:5])))
   
+  maxlength <- ncol(items)
   top <- list()
   bottom <- list()
   middle <- list()
-  if(nrow(items[which(items$level == "top"),2:5]) > 0) top <- list("level"="-1", "label"="input", "timeline" = (items[which(items$level == "top"),2:5]))
-  if(nrow(items[which(items$level == "middle"),2:5]) > 0) {
-    middle <- list("level"="0", "label"=title, "timeline" = (items[which(items$level == "middle"),2:5]))
+  if(nrow(items[which(items$level == "top"),2:maxlength]) > 0) top <- list("level"="-1", "label"="input", "timeline" = (items[which(items$level == "top"),2:maxlength]))
+  if(nrow(items[which(items$level == "middle"),2:maxlength]) > 0) {
+    middle <- list("level"="0", "label"=title, "timeline" = (items[which(items$level == "middle"),2:maxlength]))
     middle <- rapply(middle,function(x) ifelse(x==Inf,maxtime,x), how = "replace")
   }
  
-  if(nrow(items[which(items$level == "bottom"),2:5]) > 0) bottom <- list("level"="1", "label"="output", "timeline" = (items[which(items$level == "bottom"),2:5]))
+  if(nrow(items[which(items$level == "bottom"),2:maxlength]) > 0) bottom <- list("level"="1", "label"="output", "timeline" = (items[which(items$level == "bottom"),2:maxlength]))
   
   hosttimeline <- list(list("type"="timeline", "mintime"=mintime, "maxtime"=maxtime, "nblevels"=nblevels), top, middle, bottom)
   
