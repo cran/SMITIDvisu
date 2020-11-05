@@ -16,7 +16,7 @@
 #'                color=list("infected"="red","offspring"="green",
 #'                              "alive"="blue","inf"="orange",
 #'                              "dead"="black","Obs"="purple"))
-#' \donttest{
+#' \dontrun{
 #' ## export as standalone html file
 #' htmlwidgets::saveWidget(tl, "timeline.html")
 #' browseURL("timeline.html")

@@ -15,19 +15,19 @@ It mainly using D3JS, noUiSlider and FileSaver javascript libraries.
 \tabular{ll}{
          Package: \tab SMITIDvisu\cr
          Type: \tab Package\cr
-         Version: \tab 0.0.6\cr
-         Date: \tab 2019-06-14\cr
+         Version: \tab 0.0.8\cr
+         Date: \tab 2020-11-04\cr
          License: \tab GPL (>=3)\cr
          }
 }
 \examples{
-\donttest{
+\dontrun{
  library(SMITIDvisu)
  demo.SMITIDvisu.run()
 }
 }
 \author{
-Jean-Francois Rey \email{jean-francois.rey@inra.fr}
+Jean-Francois Rey \email{jean-francois.rey@inrae.fr}
 
 Julien Boge \email{julien.boge.u@gmail.com}
 }

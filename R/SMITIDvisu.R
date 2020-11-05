@@ -22,7 +22,7 @@
 #' Allow to visualize host timeline, transmission tree, index diversities and variant graph using HTMLwidgets.
 #' It mainly using D3JS, noUiSlider and FileSaver javascript libraries.
 #'
-#' @author Jean-Francois Rey \email{jean-francois.rey@@inra.fr}
+#' @author Jean-Francois Rey \email{jean-francois.rey@@inrae.fr}
 #' @author Julien Boge \email{julien.boge.u@@gmail.com}
 #' @name SMITIDvisu-package
 #' @aliases SMITIDvisu
@@ -31,8 +31,8 @@
 #' @details \tabular{ll}{
 #'          Package: \tab SMITIDvisu\cr
 #'          Type: \tab Package\cr
-#'          Version: \tab 0.0.6\cr
-#'          Date: \tab 2019-06-14\cr
+#'          Version: \tab 0.0.8\cr
+#'          Date: \tab 2020-11-04\cr
 #'          License: \tab GPL (>=3)\cr
 #'          }
 #' @import Rcpp
@@ -40,7 +40,7 @@
 #' @import yaml
 #' @importFrom utils browseURL
 #' @examples
-#' \donttest{
+#' \dontrun{
 #'  library(SMITIDvisu)
 #'  demo.SMITIDvisu.run()
 #'}

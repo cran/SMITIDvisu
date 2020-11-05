@@ -4,8 +4,14 @@
 \alias{timeLine}
 \title{timeLine}
 \usage{
-timeLine(data, title, color = NULL, width = NULL, height = NULL,
-  elementId = NULL)
+timeLine(
+  data,
+  title,
+  color = NULL,
+  width = NULL,
+  height = NULL,
+  elementId = NULL
+)
 }
 \arguments{
 \item{data}{a data.frame that reprensent hosts status in time with ID, status and time in columns}
@@ -32,7 +38,7 @@ tl <- timeLine(hostline,
                color=list("infected"="red","offspring"="green",
                              "alive"="blue","inf"="orange",
                              "dead"="black","Obs"="purple"))
-\donttest{
+\dontrun{
 ## export as standalone html file
 htmlwidgets::saveWidget(tl, "timeline.html")
 browseURL("timeline.html")

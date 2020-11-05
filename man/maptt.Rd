@@ -4,13 +4,29 @@
 \alias{maptt}
 \title{maptt}
 \usage{
-maptt(data, multipleValuesByTime = c(), circleRadius = 6,
-  defaultNodeColor = "steelblue", nodeColorByState = list(),
-  moveEdgeColor = "steelblue", color1 = "green", color2 = "red",
-  nbColors = 10, minWeight = 0, maxWeight = 1, weight1 = 0,
-  weight2 = 1, autoFocus = TRUE, keepOldFeatures = TRUE,
-  optionsControl = TRUE, gradientControl = TRUE, legend = TRUE,
-  width = NULL, height = NULL, elementId = NULL)
+maptt(
+  data,
+  multipleValuesByTime = c(),
+  circleRadius = 6,
+  defaultNodeColor = "steelblue",
+  nodeColorByState = list(),
+  moveEdgeColor = "steelblue",
+  color1 = "green",
+  color2 = "red",
+  nbColors = 10,
+  minWeight = 0,
+  maxWeight = 1,
+  weight1 = 0,
+  weight2 = 1,
+  autoFocus = TRUE,
+  keepOldFeatures = TRUE,
+  optionsControl = TRUE,
+  gradientControl = TRUE,
+  legend = TRUE,
+  width = NULL,
+  height = NULL,
+  elementId = NULL
+)
 }
 \arguments{
 \item{data}{Either a data frame that will be converted to a GeoJSON

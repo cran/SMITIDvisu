@@ -88,30 +88,6 @@ HTMLWidgets.widget({
 		map.addControl(timeDimensionControl);
 
 		//=====================================================
-		// * Set application's default options
-		//=====================================================
-
-		// Define the color of an element depending on its state:
-		// alive, infected, dead, etc.
-		// const nodeColorByState = {
-		// 	ras: '#0e0',
-		// 	infected: 'red',
-		// 	dead: 'gray',
-		// 	Contact: 'darkorange',
-		// 	Removal: 'green',
-		// };
-		// const defaultNodeColor = 'green';
-		// const gradient = {
-		// 	color1: 'green',
-		// 	color2: 'red',
-		// 	nbColors: 10,
-		// 	minWeight: 0,
-		// 	maxWeight: 1,
-		// 	weight1: 0,
-		// 	weight2: 1
-		// };
-
-		//=====================================================
 		// * Initialize MapTT Controls
 		//=====================================================
 
@@ -140,8 +116,8 @@ HTMLWidgets.widget({
 
 			let onSelectHost = null;
 			if (HTMLWidgets.shinyMode) {
-				onSelectHost = function(d) {
-					Shiny.onInputChange('transmissionTree_node_click', d);
+				onSelectHost = function(hostId) {
+					Shiny.onInputChange('mapttSelectedHost', hostId);
 				}
 			}
 
@@ -187,11 +163,33 @@ HTMLWidgets.widget({
 		return {
 			renderValue: (geoJsonFeatures) => initializeMaptt(geoJsonFeatures),
 			resize: (width, height) => {},
-			map: map,
-			td: timeDimension,
-			player: player,
-			control: timeDimensionControl,
-			maptt: maptt
+			getMap: () => map,
+			getTd: () => timeDimension,
+			getPlayer: () => player,
+			getTdControl: () => timeDimensionControl,
+			getMaptt: () => maptt
 		};
 	}
 });
+
+/** getMaptt
+* return object from id
+* @param id : widget name (output name in server)
+*/
+function getMaptt(id) {
+  const widget = HTMLWidgets.find("#" + id);
+  const maptt = widget.getMaptt();
+  return(maptt);
+}
+
+/** selectHost
+ * add a custom message handler to select a MapTT host
+ * client side
+ */
+if(typeof Shiny !== 'undefined' && Shiny != null) {
+  Shiny.addCustomMessageHandler("selectHost", function(message) {
+    const maptt = getMaptt(message.id);
+    const hostId = message.hostId[0];
+    maptt._displayHostHistoric(hostId);
+  });
+}

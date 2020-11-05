@@ -85,8 +85,8 @@ test_that("Additionnal columns", {
 	# Reset row names for the test comparison
 	rownames(result) <- NULL
 	# Drop unused factor levels for the test comparison
-	levels(result$status) <- droplevels(result$status)
-
+	#levels(result$status) <- droplevels(result$status)
+	
 	expected <- data.frame(
 		"time" = c(0,8,4),
 		"status" = c("","","Removal"),

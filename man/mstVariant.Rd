@@ -4,8 +4,14 @@
 \alias{mstVariant}
 \title{mstVariant}
 \usage{
-mstVariant(mat, prop, node.prop = NULL, width = NULL, height = NULL,
-  elementId = NULL)
+mstVariant(
+  mat,
+  prop,
+  node.prop = NULL,
+  width = NULL,
+  height = NULL,
+  elementId = NULL
+)
 }
 \arguments{
 \item{mat}{a distance matrix between sequence of variants (interger distance no floating values)}
@@ -35,7 +41,7 @@ That allow to draw variants proportions over time.
 library(SMITIDvisu)
 data(st)
 mstV <- mstVariant(st.dist113_all,st.prop113_all, st.listTimeProp113)
-\donttest{ 
+\dontrun{ 
 ## export as standalone html file
 htmlwidgets::saveWidget(mstV, "mstVariant.html")
 browseURL("mstVariant.html")

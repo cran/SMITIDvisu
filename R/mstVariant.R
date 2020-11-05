@@ -37,7 +37,7 @@
 #' library(SMITIDvisu)
 #' data(st)
 #' mstV <- mstVariant(st.dist113_all,st.prop113_all, st.listTimeProp113)
-#' \donttest{ 
+#' \dontrun{ 
 #' ## export as standalone html file
 #' htmlwidgets::saveWidget(mstV, "mstVariant.html")
 #' browseURL("mstVariant.html")

@@ -4,8 +4,14 @@
 \alias{transmissionTree}
 \title{transmissionTree}
 \usage{
-transmissionTree(nodes, edges, nodes.color = NULL, width = NULL,
-  height = NULL, elementId = NULL)
+transmissionTree(
+  nodes,
+  edges,
+  nodes.color = NULL,
+  width = NULL,
+  height = NULL,
+  elementId = NULL
+)
 }
 \arguments{
 \item{nodes}{a data.frame that reprensent hosts status in time with ID, status and time in columns}
@@ -28,7 +34,7 @@ Time use timestamp or Date in ISO format ("%Y-%m-%dT%H:%M:%S").
 library(SMITIDvisu)
 data(transmissiontree)
 tt <- transmissionTree(tt.nodes,tt.edges, nodes.color = list("default"="black","Inf"="red"))
-\donttest{
+\dontrun{
 ## export as standalone html file
 htmlwidgets::saveWidget(tt, "transTree.html")
 browseURL("transTree.html")

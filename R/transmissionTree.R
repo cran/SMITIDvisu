@@ -30,7 +30,7 @@
 #' library(SMITIDvisu)
 #' data(transmissiontree)
 #' tt <- transmissionTree(tt.nodes,tt.edges, nodes.color = list("default"="black","Inf"="red"))
-#' \donttest{
+#' \dontrun{
 #' ## export as standalone html file
 #' htmlwidgets::saveWidget(tt, "transTree.html")
 #' browseURL("transTree.html")
