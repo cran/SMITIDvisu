@@ -15,8 +15,8 @@ It mainly using D3JS, noUiSlider and FileSaver javascript libraries.
 \tabular{ll}{
          Package: \tab SMITIDvisu\cr
          Type: \tab Package\cr
-         Version: \tab 0.0.8\cr
-         Date: \tab 2020-11-04\cr
+         Version: \tab 0.0.9\cr
+         Date: \tab 2021-02-08\cr
          License: \tab GPL (>=3)\cr
          }
 }

@@ -1,8 +1,8 @@
-353f7d21286c4cffeb2784a28f55b6ae *DESCRIPTION
+8d8eca2cc00d64384ff832505ca3c8a4 *DESCRIPTION
 1ebbd3e34237af26da5dc08a4e440464 *LICENSE
 cdb65cd108374a74f5ff802d40221129 *NAMESPACE
 8ea51bde22a17043bc518d51e2f3f1a9 *R/RcppExports.R
-3cff68dc86e0f44b6e7d8edacf2cf474 *R/SMITIDvisu.R
+70fb15229c15734f353704d57f2c5a04 *R/SMITIDvisu.R
 44f686777b4314f9f10bab0987b08768 *R/data-format.R
 588cfa980055637b896f6d221f496194 *R/demo.R
 dd3b0656be0ff3bb975f40a09980240b *R/df2geojson.R
@@ -66,7 +66,7 @@ cac9101668aa2b7b24fc062f440e3be3 *inst/htmlwidgets/mstVariant.yaml
 90ca0dc6de6322eb460110ec91e8bed2 *inst/htmlwidgets/timeLine.yaml
 abba1550c625a436b60d9198b2949f2b *inst/htmlwidgets/transmissionTree.js
 6afac2dc240e3f6c7091fd05065a8058 *inst/htmlwidgets/transmissionTree.yaml
-103e1cd835fc0ebddc7f9032a1a342de *man/SMITIDvisu-package.Rd
+0dff83ac31a72cb56e7cb3651978225c *man/SMITIDvisu-package.Rd
 57727dff8014a8b6a33cd235ed083241 *man/SMITIDvisu-shiny.Rd
 8cd5a2c4027b72eba070fef0827a6c81 *man/createRainbowColors.Rd
 e33defb2c0ebd2cd8f7edc9272ee5161 *man/demo.SMITIDvisu.run.Rd
@@ -108,7 +108,7 @@ fa0ccc5f27a4931e6306e347a7c94cbf *tests/testthat/maptt/test-formatGeoJsonFeature
 ad0c7bd7e599c8159454080f6ece220f *tests/testthat/maptt/test-getFeature.R
 521d3928cab16a24267bd39694f240ce *tests/testthat/maptt/test-getFeatureAttributes.R
 ac17540f663df79d730dc0c975384271 *tests/testthat/maptt/test-getFeatureAttributesAtTime.R
-c63c9324a49c56d8e29edf1ba84b7104 *tests/testthat/maptt/test-getFeatureDataById.R
+edd05315b29bb52daf01d43dc9d786e2 *tests/testthat/maptt/test-getFeatureDataById.R
 405775e56172a33ef605c68e2bff561b *tests/testthat/maptt/test-handleAdditionnalProperty.R
 167308e184a3a4070a9c8e5d3101d7c3 *tests/testthat/maptt/test-prepareData.R
 4330c3e80eaafa7c57d61a84ca05c518 *tests/testthat/maptt/test-replaceNA.R
